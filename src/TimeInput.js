@@ -22,17 +22,22 @@ var TimeInput = CreateReactClass({
   propTypes: {
     className: PropTypes.string,
     value: PropTypes.string,
-    onChange: PropTypes.func
+    onChange: PropTypes.func,
+    inputClassname: PropTypes.string
   },
   render () {
     var className = 'TimeInput'
     if (this.props.className) {
       className += (' ' + this.props.className)
     }
+    var inputClassname = 'TimeInput-input'
+    if (this.props.inputClassname) {
+      inputClassname += (' ' + this.props.inputClassname)
+    }
     return (
       <div className={className}>
         <input
-          className='TimeInput-input'
+          className={inputClassname}
           ref={(input) => { this.input = input }}
           type='text'
           value={this.format(this.props.value)}
