@@ -24,7 +24,8 @@ var TimeInput = CreateReactClass({
     value: PropTypes.string,
     onChange: PropTypes.func,
     inputClassname: PropTypes.string,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
+    styles: PropTypes.object
   },
   render () {
     var className = 'TimeInput'
@@ -36,18 +37,21 @@ var TimeInput = CreateReactClass({
       inputClassname += (' ' + this.props.inputClassname)
     }
     return (
-      <div className={className}>
-        <input
-          className={inputClassname}
-          disabled={this.props.disabled}
-          ref={(input) => { this.input = input }}
-          type='text'
-          value={this.format(this.props.value)}
-          onChange={this.handleChange}
-          onBlur={this.handleBlur}
-          onKeyDown={this.handleKeyDown}
-        />
-      </div>
+        <div className={className} style={this.props.styles && this.props.styles.wrapper}>
+          <input
+              className={inputClassname}
+              disabled={this.props.disabled}
+              style={this.props.styles && this.props.styles.input}
+              ref={(input) => {
+                this.input = input
+              }}
+              type='text'
+              value={this.format(this.props.value)}
+              onChange={this.handleChange}
+              onBlur={this.handleBlur}
+              onKeyDown={this.handleKeyDown}
+          />
+        </div>
     )
   },
   format (val) {
@@ -65,7 +69,7 @@ var TimeInput = CreateReactClass({
     if (index || index === 0) caret.set(this.input, index)
   },
   handleBlur () {
-    if (this.mounted) this.setState({ caretIndex: null })
+    if (this.mounted) this.setState({caretIndex: null})
   },
   handleEscape () {
     if (this.mounted) this.input.blur()
@@ -85,7 +89,7 @@ var TimeInput = CreateReactClass({
     event.preventDefault()
     var index = groupId * 3
     if (this.props.value.charAt(index) === ' ') index++
-    if (this.mounted) this.setState({ caretIndex: index })
+    if (this.mounted) this.setState({caretIndex: index})
   },
   handleArrows (event) {
     event.preventDefault()
@@ -204,12 +208,12 @@ var TimeInput = CreateReactClass({
       this.onChange(newValue, end)
     } else {
       var caretIndex = this.props.value.length - (newValue.length - end)
-      if (this.mounted) this.setState({ caretIndex: caretIndex })
+      if (this.mounted) this.setState({caretIndex: caretIndex})
     }
   },
   onChange: function (str, caretIndex) {
     if (this.props.onChange) this.props.onChange(this.format(str))
-    if (this.mounted && typeof caretIndex === 'number') this.setState({ caretIndex: caretIndex })
+    if (this.mounted && typeof caretIndex === 'number') this.setState({caretIndex: caretIndex})
   }
 })
 
